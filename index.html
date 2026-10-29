@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SheetHub.io — Institutional Spreadsheet OS, Quant Models & Sheet-to-API Engine</title>
-    <meta name="description" content="Deploy institutional-grade Google Sheets & Excel operating systems, automated arbitrage trackers, quantitative financial models, and REST API spreadsheet pipelines.">
+    <title>SheetHub.io — Quantitative Spreadsheet OS, Financial Models & Sheet-to-API Engine</title>
+    <meta name="description" content="Institutional-grade Google Sheets & Excel operating systems, automated arbitrage trackers, quantitative portfolio terminals, and instant Sheet-to-API pipelines.">
+    <meta property="og:title" content="SheetHub.io — Quantitative Spreadsheet Architecture">
+    <meta property="og:description" content="Turn spreadsheets into automated financial engines and REST APIs. Explore flagship templates or acquire the SheetHub.io brand.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sheethub.io">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +24,7 @@
                     },
                     colors: {
                         obsidian: '#03060C',
-                        panel: '#090F1E',
+                        panel: '#0A101D',
                         emerald: {
                             450: '#10B981',
                             550: '#059669'
@@ -32,150 +36,781 @@
     </script>
     <style>
         :root {
-            --bg-deep: #03060c;
-            --accent-emerald: #10b981;
-            --accent-cyan: #06b6d4;
-            --accent-indigo: #6366f1;
-        }
-        * {
-            box-sizing: border-box;
+            --glow-emerald: rgba(16, 185, 129, 0.35);
+            --glow-cyan: rgba(6, 182, 212, 0.25);
         }
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-deep);
-            color: #f8fafc;
+            background-color: #03060C;
+            color: #F8FAFC;
             overflow-x: hidden;
         }
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050811;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-            border: 1px solid rgba(16, 185, 129, 0.2);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #10b981;
-        }
-        /* Advanced Glassmorphism & Glows */
-        .glass-ultra {
-            background: linear-gradient(145deg, rgba(15, 23, 42, 0.78) 0%, rgba(9, 13, 24, 0.88) 100%);
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #03060C; }
+        ::-webkit-scrollbar-thumb { background: #1E293B; border-radius: 4px; border: 1px solid #334155; }
+        ::-webkit-scrollbar-thumb:hover { background: #10B981; }
+
+        /* Advanced Glassmorphism & Holographic Borders */
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.78) 0%, rgba(7, 11, 22, 0.88) 100%);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(51, 65, 85, 0.45);
         }
         .glass-card {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(7, 11, 20, 0.9) 100%);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(51, 65, 85, 0.45);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.65) 0%, rgba(9, 14, 26, 0.9) 100%);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(51, 65, 85, 0.4);
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .glass-card:hover {
             transform: translateY(-6px);
-            border-color: rgba(16, 185, 129, 0.55);
-            box-shadow: 0 24px 48px -12px rgba(16, 185, 129, 0.18), inset 0 1px 1px rgba(16, 185, 129, 0.25);
+            border-color: rgba(16, 185, 129, 0.6);
+            box-shadow: 0 20px 50px -15px rgba(16, 185, 129, 0.22), 0 0 25px -5px rgba(6, 182, 212, 0.15);
         }
-        .neon-border-emerald {
-            box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.35), inset 0 0 20px -10px rgba(16, 185, 129, 0.3);
-            border: 1px solid rgba(16, 185, 129, 0.5);
+        .hero-glow {
+            background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.18) 0%, rgba(6, 182, 212, 0.08) 38%, transparent 70%);
         }
-        .aurora-blur {
-            position: absolute;
-            filter: blur(130px);
-            z-index: 0;
-            pointer-events: none;
-            opacity: 0.45;
-        }
-        /* Grid Matrix Overlay */
-        .quantum-grid {
-            background-size: 40px 40px;
+        .matrix-grid {
+            background-size: 36px 36px;
             background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+                linear-gradient(to right, rgba(30, 41, 59, 0.22) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(30, 41, 59, 0.22) 1px, transparent 1px);
         }
-        /* Infinite Ticker Tape */
-        @keyframes tickerMove {
+        /* Ticker Tape Animation */
+        @keyframes ticker {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        .ticker-track {
+        .animate-ticker {
             display: flex;
             width: max-content;
-            animation: tickerMove 38s linear infinite;
+            animation: ticker 34s linear infinite;
         }
-        .ticker-track:hover {
+        .animate-ticker:hover {
             animation-play-state: paused;
+        }
+        /* Pulse & Shimmer Effects */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .btn-shimmer {
+            background: linear-gradient(90deg, #10B981 0%, #34D399 25%, #06B6D4 50%, #34D399 75%, #10B981 100%);
+            background-size: 200% auto;
+            animation: shimmer 6s linear infinite;
         }
         /* Spreadsheet Cell Styling */
         .sheet-cell {
-            border-right: 1px solid rgba(51, 65, 85, 0.4);
-            border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+            border-right: 1px solid rgba(51, 65, 85, 0.45);
+            border-bottom: 1px solid rgba(51, 65, 85, 0.45);
             padding: 8px 12px;
-            font-size: 12px;
             font-family: 'JetBrains Mono', monospace;
-            white-space: nowrap;
+            font-size: 12px;
             transition: background 0.15s ease;
+            cursor: cell;
         }
         .sheet-cell:hover {
             background: rgba(16, 185, 129, 0.08);
         }
-        .sheet-header-cell {
+        .sheet-cell.active-cell {
+            background: rgba(16, 185, 129, 0.15);
+            outline: 2px solid #10B981;
+            outline-offset: -2px;
+            z-index: 10;
+        }
+        .sheet-header {
             background: rgba(15, 23, 42, 0.95);
-            color: #94a3b8;
+            color: #94A3B8;
             font-weight: 600;
             text-align: center;
-            border-right: 1px solid rgba(51, 65, 85, 0.5);
-            border-bottom: 1px solid rgba(51, 65, 85, 0.6);
-            padding: 6px 10px;
             font-size: 11px;
-            font-family: 'JetBrains Mono', monospace;
             user-select: none;
         }
-        /* Range Slider Custom */
+        /* Custom Range Slider */
         input[type=range] {
             -webkit-appearance: none;
-            appearance: none;
             background: transparent;
-            cursor: pointer;
         }
         input[type=range]::-webkit-slider-runnable-track {
-            background: #1e293b;
             height: 6px;
             border-radius: 999px;
+            background: #1E293B;
         }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
-            margin-top: -5px;
-            background-color: #10b981;
-            height: 16px;
-            width: 16px;
+            height: 18px;
+            width: 18px;
             border-radius: 50%;
-            box-shadow: 0 0 12px rgba(16, 185, 129, 0.9);
-            border: 2px solid #ffffff;
-        }
-        /* Shimmer Text */
-        .text-gradient-pro {
-            background: linear-gradient(135deg, #ffffff 0%, #a7f3d0 45%, #34d399 75%, #22d3ee 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: #10B981;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 12px rgba(16, 185, 129, 0.8);
         }
     </style>
 </head>
-<body class="quantum-grid relative selection:bg-emerald-500 selection:text-slate-950">
+<body class="matrix-grid relative selection:bg-emerald-500 selection:text-slate-950">
 
-    <!-- BACKGROUND INTERACTIVE PARTICLE CANVAS -->
-    <canvas id="quantumCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-40"></canvas>
+    <!-- INTERACTIVE CANVAS BACKGROUND -->
+    <canvas id="quantCanvas" class="fixed inset-0 pointer-events-none z-0 opacity-45"></canvas>
 
-    <!-- AMBIENT AURORA LIGHTS -->
-    <div class="aurora-blur w-[550px] h-[550px] rounded-full bg-emerald-500/20 -top-48 -left-32"></div>
-    <div class
+    <!-- 1. TOP INSTITUTIONAL DOMAIN ACQUISITION BAR -->
+    <div class="relative z-50 bg-gradient-to-r from-emerald-950 via-slate-900 to-cyan-950 border-b border-emerald-500/30 py-2.5 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+            <div class="flex items-center gap-2.5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500 text-slate-950 shadow-sm shadow-emerald-500/50">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-950 animate-ping"></span>
+                    Verified Digital Asset
+                </span>
+                <span class="text-slate-200 font-medium">
+                    The category-defining domain & brand <strong class="text-white font-mono underline decoration-emerald-400">SheetHub.io</strong> (Origin: Hacker News 2020) is available for immediate acquisition.
+                </span>
+            </div>
+            <div class="flex items-center gap-4 shrink-0">
+                <button onclick="openAcquisitionModal()" class="text-slate-300 hover:text-white font-mono text-[11px] underline underline-offset-4">
+                    View Valuation Metrics
+                </button>
+                <a href="https://porkbun.com/checkout/search?q=sheethub.io" target="_blank" rel="noopener" class="px-3.5 py-1 rounded-md bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold tracking-tight transition flex items-center gap-1 shadow-md shadow-emerald-500/20">
+                    Acquire via Porkbun Escrow ($980 USD)
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. LIVE QUANTITATIVE METRICS TICKER TAPE -->
+    <div class="relative z-40 bg-slate-950/90 border-b border-slate-800/80 overflow-hidden py-1.5 text-[11px] font-mono text-slate-400">
+        <div class="animate-ticker flex items-center gap-10">
+            <span><strong class="text-emerald-400">● NODE_STATUS:</strong> ONLINE (0.4ms)</span>
+            <span><strong class="text-cyan-400">SHEET_API_V2:</strong> 99.998% UPTIME</span>
+            <span><strong class="text-white">DOMAIN_ASSET:</strong> SHEETHUB.IO [8-CHAR .IO PREMIUM]</span>
+            <span><strong class="text-emerald-400">CROSS-TLD DEMAND:</strong> .CO / .NET / .ORG ACTIVE</span>
+            <span><strong class="text-amber-400">HN_HERITAGE:</strong> "Show HN: SheetHub – Turn Excel Formulas into APIs"</span>
+            <span><strong class="text-emerald-400">ARBITRAGE_OS_V4:</strong> +142.8% AVG ROI BENCHMARK</span>
+            <span><strong class="text-cyan-400">INSTANT_ESCROW:</strong> PORKBUN REGISTRAR VERIFIED ($980 BIN)</span>
+            <!-- Duplicate for seamless loop -->
+            <span><strong class="text-emerald-400">● NODE_STATUS:</strong> ONLINE (0.4ms)</span>
+            <span><strong class="text-cyan-400">SHEET_API_V2:</strong> 99.998% UPTIME</span>
+            <span><strong class="text-white">DOMAIN_ASSET:</strong> SHEETHUB.IO [8-CHAR .IO PREMIUM]</span>
+            <span><strong class="text-emerald-400">CROSS-TLD DEMAND:</strong> .CO / .NET / .ORG ACTIVE</span>
+            <span><strong class="text-amber-400">HN_HERITAGE:</strong> "Show HN: SheetHub – Turn Excel Formulas into APIs"</span>
+            <span><strong class="text-emerald-400">ARBITRAGE_OS_V4:</strong> +142.8% AVG ROI BENCHMARK</span>
+            <span><strong class="text-cyan-400">INSTANT_ESCROW:</strong> PORKBUN REGISTRAR VERIFIED ($980 BIN)</span>
+        </div>
+    </div>
+
+    <!-- 3. STICKY NAVIGATION HEADER -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-3.5 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-cyan-500/20 border border-emerald-500/40 flex items-center justify-center shadow-lg shadow-emerald-500/10 group-hover:border-emerald-400 transition">
+                    <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-black tracking-tight text-white text-xl">SheetHub<span class="text-emerald-400">.io</span></span>
+                        <span class="text-[10px] font-mono font-semibold uppercase px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">QUANT OS</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 font-mono hidden sm:block">Quantitative Spreadsheet Infrastructure</p>
+                </div>
+            </a>
+
+            <nav class="hidden lg:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#live-emulator" class="hover:text-emerald-400 transition flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Live Emulator
+                </a>
+                <a href="#api-playground" class="hover:text-emerald-400 transition">Sheet-to-API</a>
+                <a href="#roi-simulator" class="hover:text-emerald-400 transition">Profit Simulator</a>
+                <a href="#systems-catalog" class="hover:text-emerald-400 transition">Flagship Models</a>
+                <a href="#domain-vault" class="text-amber-400 hover:text-amber-300 transition font-semibold">Acquire Brand ($980)</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <a href="#systems-catalog" class="hidden sm:inline-flex px-4 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-mono font-semibold transition">
+                    Browse Templates
+                </a>
+                <a href="https://porkbun.com/checkout/search?q=sheethub.io" target="_blank" rel="noopener" class="px-4 py-2 rounded-lg btn-shimmer text-slate-950 font-extrabold text-xs sm:text-sm tracking-tight shadow-lg shadow-emerald-500/20">
+                    Buy Domain ($980)
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 4. HERO SECTION + LIVE INTERACTIVE SPREADSHEET EMULATOR -->
+    <main class="relative z-10 hero-glow">
+        <section class="max-w-7xl mx-auto px-6 pt-14 pb-20">
+            <div class="text-center max-w-4xl mx-auto mb-12">
+                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-slate-700/80 text-xs font-mono text-emerald-400 mb-6 shadow-inner">
+                    <svg class="w-4 h-4 text-cyan-400 animate-spin" style="animation-duration: 8s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                    <span>ARCHITECTED FOR FOUNDERS, ARBITRAGE TRADERS & QUANT TEAMS</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[1.06] mb-6">
+                    Where Spreadsheets Become <br class="hidden sm:inline">
+                    <span class="bg-gradient-to-r from-emerald-400 via-teal-200 to-cyan-400 bg-clip-text text-transparent">Autonomous Financial Engines.</span>
+                </h1>
+
+                <p class="text-slate-400 text-base sm:text-xl max-w-3xl mx-auto leading-relaxed mb-10 font-normal">
+                    Deploy battle-tested Google Sheets & Excel operating systems equipped with automated fee deductors, live ticker feeds, and instant <code class="text-emerald-300 font-mono bg-slate-900 px-2 py-0.5 rounded border border-slate-800">REST API</code> endpoints.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a href="#systems-catalog" class="px-8 py-4 rounded-xl btn-shimmer text-slate-950 font-black text-sm sm:text-base tracking-tight transition shadow-xl shadow-emerald-500/25 flex items-center gap-2">
+                        <span>Explore Flagship Sheet Systems</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+                    </a>
+                    <a href="#api-playground" class="px-7 py-4 rounded-xl glass-panel hover:border-emerald-500/50 text-white font-semibold text-sm sm:text-base transition flex items-center gap-2">
+                        <svg class="w-4 h-4 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <span>Test Sheet-to-API Console</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE SPREADSHEET TERMINAL EMULATOR -->
+            <div id="live-emulator" class="glass-panel rounded-2xl border border-slate-700/70 shadow-2xl overflow-hidden">
+                <!-- Window Top Bar -->
+                <div class="bg-slate-950 px-4 py-3 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-rose-500/80"></span>
+                        <span class="w-3 h-3 rounded-full bg-amber-500/80"></span>
+                        <span class="w-3 h-3 rounded-full bg-emerald-500/80"></span>
+                        <span class="ml-3 font-mono text-xs text-slate-300 font-semibold flex items-center gap-2">
+                            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                            SheetHub_Master_Terminal_v4.2.xlsx
+                        </span>
+                        <span class="hidden md:inline-block text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded">LIVE INTERACTIVE PREVIEW — CLICK ANY CELL</span>
+                    </div>
+
+                    <!-- Workbook Tabs -->
+                    <div class="flex items-center gap-1.5 bg-slate-900 p-1 rounded-lg border border-slate-800">
+                        <button onclick="switchSheetTab('arbitrage')" id="tab-arbitrage" class="px-3 py-1 rounded-md text-xs font-mono font-semibold bg-emerald-500 text-slate-950 transition">
+                            1. Arbitrage_OS
+                        </button>
+                        <button onclick="switchSheetTab('crypto')" id="tab-crypto" class="px-3 py-1 rounded-md text-xs font-mono font-semibold text-slate-400 hover:text-white transition">
+                            2. Quant_Portfolio
+                        </button>
+                        <button onclick="switchSheetTab('saas')" id="tab-saas" class="px-3 py-1 rounded-md text-xs font-mono font-semibold text-slate-400 hover:text-white transition">
+                            3. SaaS_CFO_Model
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Formula Bar -->
+                <div class="bg-slate-900/90 px-4 py-2 border-b border-slate-800 flex items-center gap-3 text-xs font-mono">
+                    <span id="activeCellRef" class="px-2.5 py-1 rounded bg-slate-950 text-emerald-400 border border-slate-700 font-bold min-w-[48px] text-center">F2</span>
+                    <span class="text-slate-500 font-bold italic">fx</span>
+                    <input id="formulaBarInput" type="text" readonly value="=NET_ARBITRAGE_PROFIT(C2, D2, E2, &quot;AUTO_FEE_13%&quot;)" class="w-full bg-slate-950/90 text-cyan-300 px-3 py-1 rounded border border-slate-800 focus:outline-none">
+                    <span class="hidden sm:inline-flex items-center gap-1 text-[11px] text-emerald-400 shrink-0">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Auto-Syncing
+                    </span>
+                </div>
+
+                <!-- Spreadsheet Grid Table -->
+                <div class="overflow-x-auto bg-slate-950/60">
+                    <table class="w-full border-collapse text-left">
+                        <thead>
+                            <tr>
+                                <th class="sheet-header sheet-cell w-10">#</th>
+                                <th class="sheet-header sheet-cell">A (SKU / ASSET ID)</th>
+                                <th class="sheet-header sheet-cell">B (ITEM / DESCRIPTION)</th>
+                                <th class="sheet-header sheet-cell">C (BUY / ENTRY)</th>
+                                <th class="sheet-header sheet-cell">D (MARKET / EXIT)</th>
+                                <th class="sheet-header sheet-cell">E (FEES / CHURN)</th>
+                                <th class="sheet-header sheet-cell">F (NET SPREAD / PNL)</th>
+                                <th class="sheet-header sheet-cell">G (ROI / STATUS)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="spreadsheetBody">
+                            <!-- Populated dynamically by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Bottom Status Bar -->
+                <div class="bg-slate-950 px-5 py-2.5 border-t border-slate-800/90 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400">
+                    <div class="flex items-center gap-4">
+                        <span>READY</span>
+                        <span>•</span>
+                        <span id="sheetSummaryMetric" class="text-emerald-400 font-semibold">TOTAL NET SPREAD: +$3,842.50 USD</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span>ENGINE: GOOGLE SHEETS & EXCEL 365 NATIVE</span>
+                        <a href="#systems-catalog" class="text-cyan-400 hover:underline font-semibold">Download Full Workbook →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. SECTION: SHEET-TO-API PLAYGROUND (HACKER NEWS HERITAGE) -->
+        <section id="api-playground" class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/60">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <!-- Left Column: Explanation & Controls -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono">
+                        <span>⚡ HACKER NEWS ORIGIN ARCHITECTURE</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                        Turn Any Excel or Google Sheet Formula Into a <span class="text-emerald-400">REST API.</span>
+                    </h2>
+                    <p class="text-slate-400 text-sm sm:text-base leading-relaxed">
+                        Originally featured on <strong class="text-slate-200">Hacker News</strong> (<em class="text-emerald-300">"Show HN: SheetHub – Turn your Excel formulas into APIs"</em>), our core architecture transforms complex spreadsheet models into low-latency JSON endpoints without exposing your underlying proprietary formulas.
+                    </p>
+
+                    <div class="space-y-3 pt-2">
+                        <label class="block text-xs font-mono uppercase text-slate-400">Select Live Spreadsheet Endpoint to Test:</label>
+                        <div class="grid grid-cols-1 gap-2.5">
+                            <button onclick="runApiSimulation('arbitrage')" id="api-btn-arbitrage" class="text-left p-3.5 rounded-xl glass-panel border-emerald-500/60 hover:border-emerald-400 transition flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded mr-2">GET</span>
+                                    <span class="font-mono text-xs text-white font-semibold">/v2/sheets/arbitrage-scanner</span>
+                                </div>
+                                <span class="text-xs font-mono text-emerald-400">Run →</span>
+                            </button>
+
+                            <button onclick="runApiSimulation('valuation')" id="api-btn-valuation" class="text-left p-3.5 rounded-xl glass-panel hover:border-emerald-400 transition flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-mono bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded mr-2">POST</span>
+                                    <span class="font-mono text-xs text-white font-semibold">/v2/sheets/saas-dcf-valuation</span>
+                                </div>
+                                <span class="text-xs font-mono text-slate-400">Run →</span>
+                            </button>
+
+                            <button onclick="runApiSimulation('portfolio')" id="api-btn-portfolio" class="text-left p-3.5 rounded-xl glass-panel hover:border-emerald-400 transition flex items-center justify-between">
+                                <div>
+                                    <span class="text-[10px] font-mono bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded mr-2">GET</span>
+                                    <span class="font-mono text-xs text-white font-semibold">/v2/sheets/quant-kelly-criterion</span>
+                                </div>
+                                <span class="text-xs font-mono text-slate-400">Run →</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Live JSON Output Terminal -->
+                <div class="lg:col-span-7">
+                    <div class="glass-panel rounded-2xl border border-slate-700/80 overflow-hidden shadow-2xl">
+                        <div class="bg-slate-950 px-5 py-3 border-b border-slate-800 flex items-center justify-between text-xs font-mono">
+                            <div class="flex items-center gap-2">
+                                <span class="text-emerald-400 font-bold">200 OK</span>
+                                <span class="text-slate-600">|</span>
+                                <span id="apiLatencyBadge" class="text-cyan-400">Latency: 18ms</span>
+                            </div>
+                            <button onclick="copyApiJson()" id="copyJsonBtn" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 transition text-[11px]">
+                                Copy JSON Payload
+                            </button>
+                        </div>
+                        <pre id="apiJsonOutput" class="p-6 text-xs sm:text-sm font-mono text-emerald-300 bg-slate-950/90 overflow-x-auto leading-relaxed min-h-[320px]"></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. SECTION: INTERACTIVE PROFIT & ARBITRAGE SIMULATOR WITH DYNAMIC SVG CHART -->
+        <section id="roi-simulator" class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/60">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-xs font-mono uppercase tracking-widest text-emerald-400">Embedded Quantitative Engine</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Interactive 12-Month Compounding & Margin Simulator</h2>
+                <p class="text-slate-400 text-sm mt-2">Adjust the parameters below to preview how our automated spreadsheet models project cashflow and net arbitrage margins.</p>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-slate-700/70">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    <!-- Sliders -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-slate-400">UNIT ACQUISITION COST ($ USD)</span>
+                                <span id="lblCost" class="text-white font-bold">$35.00</span>
+                            </div>
+                            <input id="simCost" type="range" min="5" max="500" value="35" oninput="updateQuantumSimulator()" class="w-full">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-slate-400">MARKET RESALE PRICE ($ USD)</span>
+                                <span id="lblPrice" class="text-emerald-400 font-bold">$89.00</span>
+                            </div>
+                            <input id="simPrice" type="range" min="15" max="1200" value="89" oninput="updateQuantumSimulator()" class="w-full">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-slate-400">MARKETPLACE / PAYMENT FEE (%)</span>
+                                <span id="lblFee" class="text-cyan-400 font-bold">12.5%</span>
+                            </div>
+                            <input id="simFee" type="range" min="0" max="30" step="0.5" value="12.5" oninput="updateQuantumSimulator()" class="w-full">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-slate-400">MONTHLY VOLUME (UNITS / LICENSES)</span>
+                                <span id="lblVol" class="text-white font-bold">65 units/mo</span>
+                            </div>
+                            <input id="simVol" type="range" min="5" max="500" value="65" oninput="updateQuantumSimulator()" class="w-full">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 pt-3 border-t border-slate-800">
+                            <div class="bg-slate-950/90 p-4 rounded-xl border border-slate-800">
+                                <span class="text-[10px] font-mono text-slate-400 block">NET PROFIT / UNIT</span>
+                                <span id="outUnitProfit" class="text-2xl font-black font-mono text-emerald-400">$42.88</span>
+                            </div>
+                            <div class="bg-slate-950/90 p-4 rounded-xl border border-slate-800">
+                                <span class="text-[10px] font-mono text-slate-400 block">NET ROI MARGIN</span>
+                                <span id="outRoiPct" class="text-2xl font-black font-mono text-cyan-400">+122.5%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic SVG Chart + Annual Projection -->
+                    <div class="lg:col-span-7 bg-slate-950/90 rounded-2xl p-6 border border-slate-800 flex flex-col justify-between">
+                        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                            <div>
+                                <span class="text-[11px] font-mono text-slate-400 uppercase">Projected Monthly Net Cashflow</span>
+                                <div id="outMonthlyNet" class="text-3xl sm:text-4xl font-black font-mono text-white mt-0.5">$2,786.88</div>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-[11px] font-mono text-emerald-400 uppercase">12-Month Cumulative Run-Rate</span>
+                                <div id="outAnnualNet" class="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-400 mt-0.5">$33,442.50</div>
+                            </div>
+                        </div>
+
+                        <!-- Dynamic SVG Bar + Area Graph -->
+                        <div class="w-full h-52 relative">
+                            <svg id="simSvgChart" viewBox="0 0 600 180" class="w-full h-full overflow-visible"></svg>
+                        </div>
+
+                        <div class="flex justify-between text-[10px] font-mono text-slate-500 pt-3 border-t border-slate-900">
+                            <span>M1</span><span>M2</span><span>M3</span><span>M4</span><span>M5</span><span>M6</span>
+                            <span>M7</span><span>M8</span><span>M9</span><span>M10</span><span>M11</span><span>M12 (COMPOUNDED)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. SECTION: FLAGSHIP SPREADSHEET SYSTEMS CATALOG -->
+        <section id="systems-catalog" class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/60">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs font-mono uppercase tracking-widest text-emerald-400">Turnkey Operating Systems</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Flagship Quantitative Workbooks</h2>
+                </div>
+                <p class="text-slate-400 text-sm max-w-md mt-3 md:mt-0">
+                    Instant digital delivery. Includes unlocked formulas, Google Sheets cloud links, and native Microsoft Excel (`.xlsx`) files.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Product Card 1 -->
+                <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+                    <div>
+                        <!-- Custom SVG Visual Header -->
+                        <div class="w-full h-36 rounded-xl bg-slate-950 border border-slate-800 mb-6 p-4 flex flex-col justify-between relative overflow-hidden">
+                            <div class="flex justify-between items-center z-10">
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">BESTSELLER • v4.2</span>
+                                <span class="font-mono text-xs text-slate-400">14 Tabs Included</span>
+                            </div>
+                            <svg class="w-full h-16 stroke-emerald-400 fill-emerald-500/10" viewBox="0 0 200 50">
+                                <path d="M0 45 L30 35 L60 38 L95 20 L130 25 L165 8 L200 4 L200 50 L0 50 Z" stroke-width="2"/>
+                            </svg>
+                            <div class="text-[11px] font-mono text-slate-300 z-10">Auto-Fee Matrix: Amazon • eBay • StockX</div>
+                        </div>
+
+                        <div class="flex justify-between items-baseline mb-2">
+                            <h3 class="text-xl font-bold text-white">Reseller & Arbitrage Command OS</h3>
+                            <span class="text-2xl font-black font-mono text-emerald-400">$19</span>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Complete inventory ledger, automated platform fee deductor, ROI heatmaps, and tax-ready profit reporting for high-volume resellers.
+                        </p>
+
+                        <ul class="space-y-2.5 text-xs font-mono text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Automated eBay, StockX, GOAT & Amazon Fees</li>
+                            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> SKU Aging & Dead-Stock Alert Formulas</li>
+                            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Monthly Cashflow & Tax Schedule C Summary</li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        <button onclick="openProductModal('arbitrage')" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-emerald-500/20">
+                            Inspect & Download ($19 USD) →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="glass-card rounded-2xl p-7 flex flex-col justify-between border-emerald-500/50 relative">
+                    <div class="absolute -top-3 right-6 px-3 py-0.5 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 text-slate-950 font-mono font-extrabold text-[10px] uppercase tracking-wider">
+                        Most Popular
+                    </div>
+                    <div>
+                        <div class="w-full h-36 rounded-xl bg-slate-950 border border-slate-800 mb-6 p-4 flex flex-col justify-between relative overflow-hidden">
+                            <div class="flex justify-between items-center z-10">
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">QUANT EDITION</span>
+                                <span class="font-mono text-xs text-slate-400">Live API Connected</span>
+                            </div>
+                            <svg class="w-full h-16 stroke-cyan-400 fill-cyan-500/10" viewBox="0 0 200 50">
+                                <path d="M0 40 L25 28 L55 32 L85 14 L115 22 L150 6 L200 2 L200 50 L0 50 Z" stroke-width="2"/>
+                            </svg>
+                            <div class="text-[11px] font-mono text-slate-300 z-10">Live Tickers: Equities • Crypto • Forex</div>
+                        </div>
+
+                        <div class="flex justify-between items-baseline mb-2">
+                            <h3 class="text-xl font-bold text-white">Crypto & Stock Portfolio Terminal</h3>
+                            <span class="text-2xl font-black font-mono text-cyan-400">$29</span>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Institutional portfolio tracker powered by native <code class="text-cyan-300">GOOGLEFINANCE</code> and REST APIs for real-time drawdown, Sharpe ratio, and Kelly sizing.
+                        </p>
+
+                        <ul class="space-y-2.5 text-xs font-mono text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> Real-Time Spot Price & PnL Auto-Refresh</li>
+                            <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> Automated Risk/Reward & Position Sizing</li>
+                            <li class="flex items-center gap-2"><span class="text-cyan-400">✓</span> Dividend & Compounding Horizon Engine</li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        <button onclick="openProductModal('crypto')" class="w-full py-3.5 rounded-xl btn-shimmer text-slate-950 font-extrabold text-sm transition shadow-lg shadow-emerald-500/25">
+                            Inspect & Download ($29 USD) →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="glass-card rounded-2xl p-7 flex flex-col justify-between">
+                    <div>
+                        <div class="w-full h-36 rounded-xl bg-slate-950 border border-slate-800 mb-6 p-4 flex flex-col justify-between relative overflow-hidden">
+                            <div class="flex justify-between items-center z-10">
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">FOUNDER CFO</span>
+                                <span class="font-mono text-xs text-slate-400">Investor Ready</span>
+                            </div>
+                            <svg class="w-full h-16 stroke-purple-400 fill-purple-500/10" viewBox="0 0 200 50">
+                                <path d="M0 46 L40 39 L80 30 L120 20 L160 10 L200 3 L200 50 L0 50 Z" stroke-width="2"/>
+                            </svg>
+                            <div class="text-[11px] font-mono text-slate-300 z-10">Metrics: MRR • ARR • LTV:CAC • Runway</div>
+                        </div>
+
+                        <div class="flex justify-between items-baseline mb-2">
+                            <h3 class="text-xl font-bold text-white">SaaS & Micro-Business CFO Sheet</h3>
+                            <span class="text-2xl font-black font-mono text-purple-400">$24</span>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed mb-6">
+                            Zero-setup financial modeling for digital founders and agencies. Track MRR cohorts, burn rate, runway scenarios, and valuation multiples.
+                        </p>
+
+                        <ul class="space-y-2.5 text-xs font-mono text-slate-300 mb-8">
+                            <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> 36-Month Dynamic Runway & Burn Model</li>
+                            <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> Subscription Churn & Cohort Retention</li>
+                            <li class="flex items-center gap-2"><span class="text-purple-400">✓</span> One-Click Executive Board PDF Layout</li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-2.5">
+                        <button onclick="openProductModal('saas')" class="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-sm transition shadow-lg shadow-emerald-500/20">
+                            Inspect & Download ($24 USD) →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. SECTION: INSTITUTIONAL DOMAIN ACQUISITION VAULT ($980 USD) -->
+        <section id="domain-vault" class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/60">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-emerald-500/40 relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-mono font-semibold">
+                            <span>👑 INSTITUTIONAL DIGITAL ASSET AVAILABLE</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+                            Acquire the <span class="text-emerald-400 font-mono">SheetHub.io</span> Domain & Brand.
+                        </h2>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            Whether you are launching an AI spreadsheet startup, a SaaS data connector, or a financial template marketplace, <strong class="text-white font-mono">SheetHub.io</strong> provides instant category authority, organic backlink heritage from <em>Hacker News</em>, and a memorable 8-letter <code class="text-emerald-300">.io</code> brand.
+                        </p>
+
+                        <!-- Asset Verification Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+                                <span class="text-[10px] font-mono text-slate-400 block">BRAND LENGTH</span>
+                                <span class="text-lg font-extrabold font-mono text-white">8 Letters</span>
+                            </div>
+                            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+                                <span class="text-[10px] font-mono text-slate-400 block">SISTER TLDS TAKEN</span>
+                                <span class="text-lg font-extrabold font-mono text-emerald-400">.CO .NET .ORG</span>
+                            </div>
+                            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+                                <span class="text-[10px] font-mono text-slate-400 block">ARCHIVE HISTORY</span>
+                                <span class="text-lg font-extrabold font-mono text-cyan-400">Since 2020</span>
+                            </div>
+                            <div class="bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+                                <span class="text-[10px] font-mono text-slate-400 block">ESCROW TRANSFER</span>
+                                <span class="text-lg font-extrabold font-mono text-amber-400">Instant (Porkbun)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Checkout Box -->
+                    <div class="lg:col-span-5 bg-slate-950/95 p-7 rounded-2xl border border-emerald-500/40 shadow-2xl space-y-5">
+                        <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                            <div>
+                                <span class="text-xs font-mono text-slate-400 block">BUY IT NOW (BIN) PRICE</span>
+                                <span class="text-4xl font-black font-mono text-white">$980 <span class="text-sm font-normal text-slate-400">USD</span></span>
+                            </div>
+                            <span class="px-3 py-1 rounded bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs font-bold">
+                                VERIFIED REGISTRAR ESCROW
+                            </span>
+                        </div>
+
+                        <ul class="space-y-2.5 text-xs font-mono text-slate-300">
+                            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> 100% Automated Ownership Transfer via Porkbun</li>
+                            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Includes Complete HTML/JS Quantum Web Codebase</li>
+                            <li class="flex items-center gap-2"><span class="text-emerald-400">✓</span> Zero Broker Negotiations — Instant Checkout</li>
+                        </ul>
+
+                        <a href="https://porkbun.com/checkout/search?q=sheethub.io" target="_blank" rel="noopener" class="w-full py-4 rounded-xl btn-shimmer text-slate-950 font-black text-center text-sm sm:text-base block shadow-xl shadow-emerald-500/25">
+                            Acquire SheetHub.io on Porkbun ($980) →
+                        </a>
+
+                        <p class="text-[11px] font-mono text-slate-500 text-center">
+                            Protected by Porkbun ICANN-Accredited Registrar Escrow.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. SECTION: INTERACTIVE FAQ ACCORDION -->
+        <section class="max-w-4xl mx-auto px-6 py-16 border-t border-slate-800/60">
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white text-center mb-10">Frequently Asked Questions</h2>
+            <div class="space-y-4">
+                <div class="glass-panel rounded-xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left flex justify-between items-center font-semibold text-white text-sm sm:text-base">
+                        <span>How does the instant domain transfer on Porkbun Marketplace work?</span>
+                        <span id="faq-icon-1" class="text-emerald-400 font-mono text-xl">+</span>
+                    </button>
+                    <div id="faq-body-1" class="hidden px-6 pb-5 text-slate-400 text-sm leading-relaxed">
+                        When you click "Buy Domain ($980)", you are directed to the official ICANN-accredited Porkbun checkout page for <code class="text-white">sheethub.io</code>. Once payment is completed via card, PayPal, or crypto, Porkbun automatically and instantaneously transfers the domain ownership directly into your account with zero manual waiting.
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left flex justify-between items-center font-semibold text-white text-sm sm:text-base">
+                        <span>Are the spreadsheet operating systems compatible with both Google Sheets and Excel?</span>
+                        <span id="faq-icon-2" class="text-emerald-400 font-mono text-xl">+</span>
+                    </button>
+                    <div id="faq-body-2" class="hidden px-6 pb-5 text-slate-400 text-sm leading-relaxed">
+                        Yes. Every flagship system includes both a direct 1-click Google Sheets cloud copy link and a native Microsoft Excel (`.xlsx`) workbook with 100% unlocked formulas so you can customize them for your business.
+                    </div>
+                </div>
+
+                <div class="glass-panel rounded-xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left flex justify-between items-center font-semibold text-white text-sm sm:text-base">
+                        <span>Can I receive this entire web platform if I purchase the SheetHub.io domain?</span>
+                        <span id="faq-icon-3" class="text-emerald-400 font-mono text-xl">+</span>
+                    </button>
+                    <div id="faq-body-3" class="hidden px-6 pb-5 text-slate-400 text-sm leading-relaxed">
+                        Yes. The complete source code of this interactive quantitative web application is open and available for the new owner of <code class="text-white">SheetHub.io</code> to deploy immediately as a SaaS landing page or digital template store.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="relative z-10 border-t border-slate-900 bg-slate-950/90 py-10 px-6 text-xs font-mono text-slate-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span class="text-slate-300 font-bold">SheetHub.io</span>
+                <span>— Quantitative Spreadsheet Systems & API Architecture.</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#live-emulator" class="hover:text-emerald-400 transition">Emulator</a>
+                <a href="#api-playground" class="hover:text-emerald-400 transition">API Docs</a>
+                <a href="https://porkbun.com/checkout/search?q=sheethub.io" target="_blank" rel="noopener" class="text-emerald-400 hover:underline">Acquire Domain ($980)</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL FOR PRODUCT PREVIEW & DOMAIN ACQUISITION -->
+    <div id="universalModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="glass-panel rounded-2xl max-w-lg w-full p-7 border border-emerald-500/40 shadow-2xl relative">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white font-mono text-lg">✕</button>
+            <span id="modalBadge" class="text-[10px] font-mono uppercase px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">INSTANT ACCESS</span>
+            <h3 id="modalTitle" class="text-2xl font-extrabold text-white mt-3 mb-2">System Preview</h3>
+            <p id="modalDesc" class="text-slate-400 text-sm leading-relaxed mb-6"></p>
+            <div id="modalSpecs" class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs font-mono text-slate-300 space-y-2 mb-6"></div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a id="modalPrimaryBtn" href="https://porkbun.com/checkout/search?q=sheethub.io" target="_blank" rel="noopener" class="w-full py-3.5 rounded-xl btn-shimmer text-slate-950 font-black text-center text-sm">
+                    Proceed to Checkout →
+                </a>
+                <button onclick="closeModal()" class="px-5 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- QUANTUM JAVASCRIPT ENGINE (EMULATOR, API CONSOLE, SVG CHARTS & CANVAS)  -->
+    <!-- ======================================================================= -->
+    <script>
+        // 1. DATASETS FOR INTERACTIVE SPREADSHEET EMULATOR
+        const sheetDatasets = {
+            arbitrage: {
+                summary: "TOTAL NET SPREAD: +$3,842.50 USD (AVG ROI: +118.4%)",
+                rows: [
+                    { row: 1, a: "AMZ-RTX4070S", b: "NVIDIA RTX 4070 Super FE", c: "$389.00", d: "$599.00", e: "$77.87 (13%)", f: "+$132.13", g: "+33.9% [CLEAR]", formula: "=NET_ARBITRAGE(C1, D1, 0.13)" },
+                    { row: 2, a: "STX-AJ1-95", b: "Air Jordan 1 Retro High OG", c: "$115.00", d: "$265.00", e: "$31.80 (12%)", f: "+$118.20", g: "+102.7% [HOT]", formula: "=STOCKX_PAYOUT(D2, 0.12) - C2" },
+                    { row: 3, a: "BBY-OLED-27", b: "LG UltraGear 27\" 240Hz OLED", c: "$299.00", d: "$649.00", e: "$84.37 (13%)", f: "+$265.63", g: "+88.8% [GLITCH]", formula: "=EBAY_NET_MARGIN(C3, D3, E3)" },
+                    { row: 4, a: "NEW-DDR5-64", b: "Corsair Dominator 64GB DDR5", c: "$94.00", d: "$219.00", e: "$26.28 (12%)", f: "+$98.72", g: "+105.0% [FAST]", formula: "=NET_ARBITRAGE(C4, D4, 0.12)" },
+                    { row: 5, a: "AMZ-WH1000XM5", b: "Sony WH-1000XM5 Noise Cancel", c: "$148.00", d: "$328.00", e: "$42.64 (13%)", f: "+$137.36", g: "+92.8% [PRIME]", formula: "=AMZ_FBA_PROFIT(C5, D5, E5)" },
+                    { row: 6, a: "WMT-PS5-PRO", b: "PlayStation 5 Pro Console 2TB", c: "$419.00", d: "$699.00", e: "$76.89 (11%)", f: "+$203.11", g: "+48.4% [HOLD]", formula: "=STOCKX_PAYOUT(D6, 0.11) - C6" }
+                ]
+            },
+            crypto: {
+                summary: "PORTFOLIO NAV: $148,920.00 USD (SHARPE RATIO: 2.84)",
+                rows: [
+                    { row: 1, a: "BTC-USD", b: "Bitcoin Spot Core Allocation", c: "$58,400", d: "$89,250", e: "0.10% Fee", f: "+$30,850", g: "+52.8% [LONG]", formula: "=GOOGLEFINANCE(\"CURRENCY:BTCUSD\") - C1" },
+                    { row: 2, a: "SOL-USD", b: "Solana High-Beta Momentum", c: "$112.50", d: "$218.40", e: "0.15% Fee", f: "+$105.90", g: "+94.1% [STAKED]", formula: "=KELLY_SIZE(C2, D2, 0.68)" },
+                    { row: 3, a: "NVDA-NASDAQ", b: "NVIDIA Corp Quantitative Eq", c: "$88.20", d: "$142.60", e: "$0.00", f: "+$54.40", g: "+61.6% [CORE]", formula: "=GOOGLEFINANCE(\"NASDAQ:NVDA\")" },
+                    { row: 4, a: "ETH-ARB-LP", b: "ETH/USDC Delta-Neutral Vault", c: "$10,000", d: "$12,840", e: "Gas $4.20", f: "+$2,840", g: "+28.4% [APY]", formula: "=YIELD_COMPOUND(C4, 0.284, 365)" },
+                    { row: 5, a: "MSTR-NASDAQ", b: "MicroStrategy Vol Arbitrage", c: "$195.00", d: "$380.00", e: "0.05%", f: "+$185.00", g: "+94.8% [HEDGE]", formula: "=VOLATILITY_SPREAD(C5, D5)" },
+                    { row: 6, a: "CASH-TBILL", b: "US Treasury 5.2% Liquidity", c: "$25,000", d: "$26,300", e: "0.00%", f: "+$1,300", g: "+5.2% [SAFE]", formula: "=RISK_FREE_YIELD(C6, 0.052)" }
+                ]
+            },
+            saas: {
+                summary: "ANNUAL RECURRING REVENUE (ARR): $412,800 USD (RUNWAY: ∞ PROFITABLE)",
+                rows: [
+                    { row: 1, a: "COHORT-Q1", b: "Enterprise API Subscriptions", c: "$1,200 CAC", d: "$14,400 LTV", e: "1.8% Churn", f: "+$13,200", g: "12.0x LTV:CAC", formula: "=SAAS_LTV(D1, E1) / C1" },
+                    { row: 2, a: "COHORT-Q2", b: "Self-Serve Pro Templates", c: "$18 CAC", d: "$185 LTV", e: "0.0% One-Time", f: "+$167.00", g: "10.2x ROAS", formula: "=STRIPE_NET_REVENUE(D2) - C2" },
+                    { row: 3, a: "INFRA-AWS", b: "Cloud Edge & GitHub Nodes", c: "$42/mo", d: "$34,400 MRR", e: "0.12% Cost", f: "+$34,358", g: "99.8% GROSS", formula: "=(D3 - C3) / D3" },
+                    { row: 4, a: "AFFILIATE-US", b: "Inbound Marketplace Partner", c: "$0 CAC", d: "$8,920/mo", e: "15% RevShare", f: "+$7,582", g: "100% ORGANIC", formula: "=PARTNER_NET_PAYOUT(D4, 0.15)" },
+                    { row: 5, a: "VALUATION", b: "Implied SaaS Exit Multiple", c: "$412.8k ARR", d: "$2.47M Exit", e: "6.0x Multiple", f: "+$2.06M", g: "SERIES-A READY", formula: "=ARR_VALUATION(C5, 6.0)" },
+                    { row: 6, a: "NET-BURN", b: "Monthly Free Cashflow (FCF)", c: "$3,100 OpEx", d: "$34,400 MRR", e: "Tax 15%", f: "+$26,605/mo", g: "+85.8% MARGIN", formula: "=(D6 - C6) * (1 - 0.15)" }
+                ]
+            }
+        };
+
+        function switchSheetTab(tabKey) {
+            ['arbitrage', 'crypto', 'saas'].forEach(k => {
+                const btn = document.getElementById('tab-' + k);
+                if (k === tabKey) {
+                    btn.className = "px-3 py-1 rounded-md text-xs font-mono font-semibold bg-emerald-500 text-slate-950 transition";
+                } else {
+                    btn.className = "px-3 py-1 rounded-md text-xs font-mono font-semibold text-slate-400 hover:text-white transition";
+                }
+            });
+
+            const data = sheetDatasets[tabKey];
+            document.getElementById('sheetSummaryMetric').innerText = data.summary;
+            const tbody = document.getElementById('spreadsheetBody');
+            tbody.innerHTML = '';
+
+            data.rows.forEach((r, idx) => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-slate-800/60 hover:bg-slate-9
