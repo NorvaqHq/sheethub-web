@@ -796,7 +796,7 @@
             }
         };
 
-        function switchSheetTab(tabKey) {
+                function switchSheetTab(tabKey) {
             ['arbitrage', 'crypto', 'saas'].forEach(k => {
                 const btn = document.getElementById('tab-' + k);
                 if (k === tabKey) {
@@ -813,4 +813,315 @@
 
             data.rows.forEach((r, idx) => {
                 const tr = document.createElement('tr');
-                tr.className = "border-b border-slate-800/60 hover:bg-slate-9
+                tr.className = "border-b border-slate-800/60 hover:bg-slate-900/60 transition";
+                tr.innerHTML = `
+                    <td class="sheet-header sheet-cell">${r.row}</td>
+                    <td class="sheet-cell text-slate-300 font-semibold" onclick="selectCell('A${r.row}', '${r.a}')">${r.a}</td>
+                    <td class="sheet-cell text-slate-200" onclick="selectCell('B${r.row}', '${r.b}')">${r.b}</td>
+                    <td class="sheet-cell text-slate-400" onclick="selectCell('C${r.row}', '${r.c}')">${r.c}</td>
+                    <td class="sheet-cell text-white font-semibold" onclick="selectCell('D${r.row}', '${r.d}')">${r.d}</td>
+                    <td class="sheet-cell text-rose-400/90" onclick="selectCell('E${r.row}', '${r.e}')">${r.e}</td>
+                    <td class="sheet-cell text-emerald-400 font-bold ${idx === 0 ? 'active-cell' : ''}" onclick="selectCell('F${r.row}', '${r.formula.replace(/"/g, '&quot;')}')">${r.f}</td>
+                    <td class="sheet-cell text-cyan-400 font-semibold" onclick="selectCell('G${r.row}', '${r.g}')">${r.g}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            if (data.rows.length > 0) {
+                document.getElementById('activeCellRef').innerText = 'F1';
+                document.getElementById('formulaBarInput').value = data.rows[0].formula;
+            }
+        }
+
+        function selectCell(cellRef, formulaOrVal) {
+            document.querySelectorAll('.sheet-cell').forEach(c => c.classList.remove('active-cell'));
+            event.currentTarget.classList.add('active-cell');
+            document.getElementById('activeCellRef').innerText = cellRef;
+            document.getElementById('formulaBarInput').value = formulaOrVal;
+        }
+
+        // 2. SHEET-TO-API PLAYGROUND ENGINE
+        const apiPayloads = {
+            arbitrage: {
+                latency: "14ms",
+                payload: {
+                    status: "200_OK",
+                    endpoint: "https://api.sheethub.io/v2/sheets/arbitrage-scanner",
+                    source_workbook: "Arbitrage_Command_OS_v4.2.xlsx",
+                    timestamp_utc: new Date().toISOString(),
+                    signals: [
+                        { sku: "BBY-OLED-27", item: "LG UltraGear 27 OLED", buy_usd: 299.00, sell_usd: 649.00, net_profit: 265.63, roi_pct: 88.8, verdict: "INSTANT_BUY" },
+                        { sku: "STX-AJ1-95", item: "Air Jordan 1 High OG", buy_usd: 115.00, sell_usd: 265.00, net_profit: 118.20, roi_pct: 102.7, verdict: "HIGH_LIQUIDITY" }
+                    ]
+                }
+            },
+            valuation: {
+                latency: "21ms",
+                payload: {
+                    status: "200_OK",
+                    endpoint: "https://api.sheethub.io/v2/sheets/saas-dcf-valuation",
+                    source_workbook: "SaaS_CFO_Model_v3.xlsx",
+                    metrics: {
+                        mrr_usd: 34400,
+                        arr_usd: 412800,
+                        net_retention_pct: 114.2,
+                        gross_margin_pct: 92.4,
+                        ltv_to_cac_ratio: 11.8,
+                        implied_exit_valuation_usd: 2476800
+                    }
+                }
+            },
+            portfolio: {
+                latency: "16ms",
+                payload: {
+                    status: "200_OK",
+                    endpoint: "https://api.sheethub.io/v2/sheets/quant-kelly-criterion",
+                    source_workbook: "Quant_Portfolio_Terminal.xlsx",
+                    allocation_engine: {
+                        portfolio_nav_usd: 148920.00,
+                        sharpe_ratio: 2.84,
+                        max_drawdown_pct: -6.4,
+                        optimal_kelly_fraction: 0.24,
+                        active_hedges: ["BTC-SPOT", "NVDA-EQ", "US-TBILL-5.2%"]
+                    }
+                }
+            }
+        };
+
+        function runApiSimulation(key) {
+            ['arbitrage', 'valuation', 'portfolio'].forEach(k => {
+                const b = document.getElementById('api-btn-' + k);
+                if (k === key) {
+                    b.className = "text-left p-3.5 rounded-xl glass-panel border border-emerald-500/70 transition flex items-center justify-between";
+                } else {
+                    b.className = "text-left p-3.5 rounded-xl glass-panel hover:border-emerald-400 transition flex items-center justify-between";
+                }
+            });
+            const item = apiPayloads[key];
+            document.getElementById('apiLatencyBadge').innerText = "Latency: " + item.latency;
+            document.getElementById('apiJsonOutput').textContent = JSON.stringify(item.payload, null, 2);
+        }
+
+        function copyApiJson() {
+            const text = document.getElementById('apiJsonOutput').textContent;
+            navigator.clipboard.writeText(text);
+            const btn = document.getElementById('copyJsonBtn');
+            btn.innerText = "Copied! ✓";
+            setTimeout(() => { btn.innerText = "Copy JSON Payload"; }, 2000);
+        }
+
+        // 3. INTERACTIVE 12-MONTH PROFIT SIMULATOR & DYNAMIC SVG CHART
+        function updateQuantumSimulator() {
+            const cost = parseFloat(document.getElementById('simCost').value) || 0;
+            const price = parseFloat(document.getElementById('simPrice').value) || 0;
+            const fee = parseFloat(document.getElementById('simFee').value) || 0;
+            const vol = parseFloat(document.getElementById('simVol').value) || 0;
+
+            document.getElementById('lblCost').innerText = '$' + cost.toFixed(2);
+            document.getElementById('lblPrice').innerText = '$' + price.toFixed(2);
+            document.getElementById('lblFee').innerText = fee.toFixed(1) + '%';
+            document.getElementById('lblVol').innerText = vol + ' units/mo';
+
+            const feeUsd = price * (fee / 100);
+            const unitNet = price - cost - feeUsd;
+            const roiPct = cost > 0 ? (unitNet / cost) * 100 : 0;
+            const monthlyNet = Math.max(0, unitNet * vol);
+
+            document.getElementById('outUnitProfit').innerText = (unitNet >= 0 ? '$' : '-$') + Math.abs(unitNet).toFixed(2);
+            document.getElementById('outUnitProfit').className = unitNet >= 0
+                ? "text-2xl font-black font-mono text-emerald-400"
+                : "text-2xl font-black font-mono text-rose-400";
+
+            document.getElementById('outRoiPct').innerText = (roiPct >= 0 ? '+' : '') + roiPct.toFixed(1) + '%';
+
+            // 12-Month Compounding Curve (8% monthly scale factor)
+            let cumulative = 0;
+            const monthlySeries = [];
+            for (let m = 1; m <= 12; m++) {
+                const mVal = monthlyNet * Math.pow(1.06, m - 1);
+                cumulative += mVal;
+                monthlySeries.push(mVal);
+            }
+
+            document.getElementById('outMonthlyNet').innerText = '$' + monthlyNet.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('outAnnualNet').innerText = '$' + cumulative.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Render SVG Bars + Line
+            const svg = document.getElementById('simSvgChart');
+            const maxVal = Math.max(...monthlySeries, 100);
+            let barsHtml = '';
+            let points = [];
+
+            monthlySeries.forEach((val, idx) => {
+                const x = 15 + idx * 48;
+                const barH = Math.max(6, (val / maxVal) * 145);
+                const y = 165 - barH;
+                points.push(`${x + 14},${y}`);
+                barsHtml += `
+                    <rect x="${x}" y="${y}" width="28" height="${barH}" rx="4" fill="url(#barGrad)" opacity="0.85"></rect>
+                    <circle cx="${x + 14}" cy="${y}" r="3.5" fill="#34D399"></circle>
+                `;
+            });
+
+            svg.innerHTML = `
+                <defs>
+                    <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#10B981" stop-opacity="0.9"/>
+                        <stop offset="100%" stop-color="#06B6D4" stop-opacity="0.15"/>
+                    </linearGradient>
+                </defs>
+                ${barsHtml}
+                <polyline fill="none" stroke="#34D399" stroke-width="2.5" points="${points.join(' ')}"/>
+            `;
+        }
+
+        // 4. PRODUCT & DOMAIN MODALS
+        const modalCatalog = {
+            arbitrage: {
+                badge: "FLAGSHIP SYSTEM • v4.2",
+                title: "Reseller & Arbitrage Command OS",
+                desc: "Engineered for high-volume Amazon, eBay, StockX, and retail arbitrage operators. Automatically calculates platform fees, shipping, net ROI, and monthly tax ledgers.",
+                specs: [
+                    "• Format: Google Sheets Cloud + Native Excel (.xlsx)",
+                    "• Built-in Fee Matrices: Amazon FBA, eBay, StockX, GOAT, Walmart",
+                    "• Automated SKU Aging & Dead-Stock Capital Alerts",
+                    "• License: Lifetime Commercial Use ($19 USD)"
+                ],
+                btnText: "Acquire System / Inquire ($19 USD) →",
+                link: "https://porkbun.com/checkout/search?q=sheethub.io"
+            },
+            crypto: {
+                badge: "QUANT EDITION • LIVE API",
+                title: "Crypto & Stock Portfolio Terminal",
+                desc: "Real-time multi-asset tracker with native GOOGLEFINANCE integration, Kelly Criterion position sizing, automated drawdown alerts, and Sharpe ratio analytics.",
+                specs: [
+                    "• Format: Google Sheets Cloud + Excel 365 API Ready",
+                    "• Live Spot Feeds: Equities, Crypto, ETFs & Treasury Yields",
+                    "• Automated Risk-Per-Trade & Delta-Neutral Calculators",
+                    "• License: Lifetime Commercial Use ($29 USD)"
+                ],
+                btnText: "Acquire System / Inquire ($29 USD) →",
+                link: "https://porkbun.com/checkout/search?q=sheethub.io"
+            },
+            saas: {
+                badge: "FOUNDER & AGENCY CFO",
+                title: "SaaS & Micro-Business CFO Sheet",
+                desc: "Complete 36-month financial modeling suite for SaaS founders, digital agencies, and online businesses. Track MRR, Churn, LTV:CAC, and exit valuation multiples.",
+                specs: [
+                    "• Format: Google Sheets + Executive Excel Workbook",
+                    "• Automated Cohort Retention & Runway Burn Simulator",
+                    "• Investor-Ready DCF & ARR Exit Multiple Calculator",
+                    "• License: Lifetime Commercial Use ($24 USD)"
+                ],
+                btnText: "Acquire System / Inquire ($24 USD) →",
+                link: "https://porkbun.com/checkout/search?q=sheethub.io"
+            }
+        };
+
+        function openProductModal(key) {
+            const item = modalCatalog[key];
+            document.getElementById('modalBadge').innerText = item.badge;
+            document.getElementById('modalTitle').innerText = item.title;
+            document.getElementById('modalDesc').innerText = item.desc;
+            document.getElementById('modalSpecs').innerHTML = item.specs.map(s => `<div>${s}</div>`).join('');
+            const btn = document.getElementById('modalPrimaryBtn');
+            btn.innerText = item.btnText;
+            btn.href = item.link;
+            document.getElementById('universalModal').classList.remove('hidden');
+        }
+
+        function openAcquisitionModal() {
+            document.getElementById('modalBadge').innerText = "INSTITUTIONAL DOMAIN ASSET";
+            document.getElementById('modalTitle').innerText = "SheetHub.io — Valuation & Escrow Brief";
+            document.getElementById('modalDesc').innerText = "SheetHub.io is a premium 8-letter .io domain with verified Hacker News launch history (2020) and active sister TLDs (.co, .net, .org). Available for immediate automated transfer via Porkbun Registrar Escrow.";
+            document.getElementById('modalSpecs').innerHTML = `
+                <div>• Asset: <strong class="text-white">sheethub.io</strong> (8 Characters, Dictionary Two-Word Brand)</div>
+                <div>• Sister TLDs Registered: <strong class="text-emerald-400">.CO / .NET / .ORG</strong></div>
+                <div>• Historical Origin: <strong class="text-cyan-400">Hacker News 'Show HN' (2020-2023 Archive)</strong></div>
+                <div>• Buy It Now (BIN) Price: <strong class="text-white">$980 USD (Instant Registrar Transfer)</strong></div>
+            `;
+            const btn = document.getElementById('modalPrimaryBtn');
+            btn.innerText = "Acquire SheetHub.io on Porkbun ($980 USD) →";
+            btn.href = "https://porkbun.com/checkout/search?q=sheethub.io";
+            document.getElementById('universalModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('universalModal').classList.add('hidden');
+        }
+
+        // 5. FAQ ACCORDION
+        function toggleFaq(id) {
+            const body = document.getElementById('faq-body-' + id);
+            const icon = document.getElementById('faq-icon-' + id);
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                icon.innerText = '−';
+            } else {
+                body.classList.add('hidden');
+                icon.innerText = '+';
+            }
+        }
+
+        // 6. SUBTLE QUANTUM PARTICLE NETWORK CANVAS
+        function initQuantCanvas() {
+            const canvas = document.getElementById('quantCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let w = canvas.width = window.innerWidth;
+            let h = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            });
+
+            const nodes = Array.from({ length: 38 }, () => ({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: (Math.random() - 0.5) * 0.35
+            }));
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                for (let i = 0; i < nodes.length; i++) {
+                    const n = nodes[i];
+                    n.x += n.vx;
+                    n.y += n.vy;
+                    if (n.x < 0 || n.x > w) n.vx *= -1;
+                    if (n.y < 0 || n.y > h) n.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(n.x, n.y, 1.6, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.45)';
+                    ctx.fill();
+
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const n2 = nodes[j];
+                        const dist = Math.hypot(n.x - n2.x, n.y - n2.y);
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.moveTo(n.x, n.y);
+                            ctx.lineTo(n2.x, n2.y);
+                            ctx.strokeStyle = `rgba(16, 185, 129, ${(1 - dist / 140) * 0.14})`;
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // INITIALIZE ALL SYSTEMS ON LOAD
+        window.addEventListener('DOMContentLoaded', () => {
+            switchSheetTab('arbitrage');
+            runApiSimulation('arbitrage');
+            updateQuantumSimulator();
+            initQuantCanvas();
+        });
+    </script>
+</body>
+</html>
